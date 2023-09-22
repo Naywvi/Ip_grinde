@@ -1,0 +1,12 @@
+#Création d'application:
+
+Idées : 
+    Vérification au niveau des ip / masque réseau
+    Possibilité d'appliquer notation CIDR et géré automatiquement -> Ne demande pas le masque (si console)
+    Calcul de masque réseau automatique
+    Possibilité de donner un nom à chaque ip ou une range
+    Possibilité de géré plusieurs réseau en même temps (instanciation)
+    Enregistrement dans un fichier texte
+
+
+    Interface graphique -> GLK
