@@ -5,4 +5,4 @@
 #include <stdlib.h>
 #include "../src/_array.c"
 
-#endif //test
+#endif
