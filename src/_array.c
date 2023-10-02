@@ -1,1 +1,0 @@
-const char menuTab[] = "[1] - Add new address \n[2] - About \n[3] - Settings \n[4] - Exit";
