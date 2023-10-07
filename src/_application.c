@@ -2,7 +2,8 @@
 
 static GtkTextBuffer *text_buffer; // Variable global
 
-static void send_text(GtkWidget *widget, gpointer data) {
+static void send_text(GtkWidget *widget, gpointer data)
+{
     GtkWidget *entry = GTK_WIDGET(data);
     const gchar *text = gtk_entry_get_text(GTK_ENTRY(entry));
 
@@ -11,17 +12,17 @@ static void send_text(GtkWidget *widget, gpointer data) {
 
     // Add to buffer
     GtkTextIter iter;
-    gtk_text_buffer_get_end_iter(text_buffer, &iter); // The end of the buffer
+    gtk_text_buffer_get_end_iter(text_buffer, &iter);     // The end of the buffer
     gtk_text_buffer_insert(text_buffer, &iter, text, -1); // Add to the end
-
 }
 
-static void activate(GtkApplication *app, gpointer user_data) {
+static void activate(GtkApplication *app, gpointer user_data)
+{
     GtkWidget *window;
     GtkWidget *button_box;
     GtkWidget *entry;
     GtkWidget *send_button;
-    GtkWidget *text_view; 
+    GtkWidget *text_view;
 
     // Window configuration
     window = gtk_application_window_new(app);
@@ -52,7 +53,7 @@ static void activate(GtkApplication *app, gpointer user_data) {
 
     // Buffer GtkTextView
     text_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_view));
-    
+
     // Initialisation of the window
     gtk_widget_show_all(window);
 }
