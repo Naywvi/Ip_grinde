@@ -1,5 +1,5 @@
-#ifndef test
-#define test
+#ifndef application
+#define application
 
 #include <stdio.h>
 #include <stdlib.h>
