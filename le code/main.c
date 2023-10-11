@@ -2,7 +2,15 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
-
+void decimalToBinary(int num)
+{
+    for (int i = 7; i >= 0; i--)
+    {
+        int bit = (num >> i) & 1;
+        printf("%d", bit);
+    }
+    printf(" ");
+}
 int main(void)
 {
     char ip[16];
@@ -94,7 +102,18 @@ int main(void)
             printf("Erreur : L'octet %d est invalide. Il doit etre compris entre 0 et 255.\n", a + 1);
             return 1;
         }
+        tokenM = strtok(NULL, ".");
+        a++;
+    }
 
+    if (a != 4)
+    {
+        printf("Erreur : Le masque de sous-reseau doit contenir quatre octets.\n");
+        return 1;
+    }
+    a = 0; // Reset a car plus haut check des values non attribué
+    while (tokenM != NULL && a < 4)
+    {
         if (a > 0 && octetsM[a] < octetsM[a - 1] && octetsM[a] != octetsM[3])
         {
             if (octetsM[a] == 0)
@@ -118,15 +137,7 @@ int main(void)
                 return 1;
             }
         }
-
-        tokenM = strtok(NULL, ".");
         a++;
-    }
-
-    if (a != 4)
-    {
-        printf("Erreur : Le masque de sous-reseau doit contenir quatre octets.\n");
-        return 1;
     }
 
     printf("Masque de sous-reseau valide :\n");
@@ -135,6 +146,23 @@ int main(void)
         printf("Octet %d : %d\n", i + 1, octetsM[i]);
     }
     //>>>>>>>>> MASK <<<<<<<<<<<<
+
+    //>>>>>>>>> CONVERT TO BINARY <<<<<<<<<<<<
+    int sizeBIP = sizeof(octetsIP) / sizeof(octetsIP[0]); // << Ici je le fais que pour l'ip
+    for (int i = 0; i < sizeBIP; i++)
+    {
+        decimalToBinary(octetsIP[i]);
+    }
+    //>>>>>>>>> CONVERT TO BINARY <<<<<<<<<<<<
+
+    //>>>>>>>>> CONVERT TO HEXA <<<<<<<<<<<<
+    int sizeHexaIp = sizeof(octetsIP) / sizeof(octetsIP[0]); // << Ici je le fais que pour l'ip
+    for (int i = 0; i < sizeHexaIp; i++)
+    {
+        printf("%X ", octetsIP[i]);
+    }
+
+    //>>>>>>>>> CONVERT TO HEXA <<<<<<<<<<<<
     return 0;
 }
 
