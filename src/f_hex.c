@@ -18,7 +18,7 @@ char** loopDecimalToHex(int* ip) {
     
     if (hexIP == NULL) {
         fprintf(stderr, "Erreur d'allocation de mémoire pour le tableau d'octets hexadécimaux.\n");
-        exit(1);
+        //exit(1);
     }
 
     for (int i = 0; i < 4; i++) {

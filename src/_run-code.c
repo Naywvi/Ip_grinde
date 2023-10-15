@@ -1,13 +1,25 @@
-void run(gchar *ipG, gchar *maskG)
+// Global variables
+static int* ip;
+static int* mask;
+static int** ipBin;
+static int** maskBin;
+static char** hexIP;
+
+int run(gchar *ipG, gchar *maskG)
 {
-    //Reset l'espace ==> free(ip) free(mask) et si tableau le faire aussi depuis son index
-    int* ip = checkIp(ipG);
- 
-    int* mask = checkMask(maskG);
+    printf("IP: %s\n", ipG);
+    printf("Mask: %s\n", maskG);
+   
+    ip = checkIp(ipG);
+    mask = checkMask(maskG);
+    if(!ip||!mask)return 0; // Invalid IP or mask
 
-    int** ipBin = loopDecimal(ip);
-    int** maskBin = loopDecimal(mask);
-    char** hexIP = loopDecimalToHex(ip);
+    ipBin = loopDecimal(ip);
+    maskBin = loopDecimal(mask);
+    hexIP = loopDecimalToHex(ip);
 
-    //freeArrays(ip, mask, ipBin, maskBin, hexIP);
+    freeArrays(ip, mask, ipBin, maskBin, hexIP); // Free memory
+    return 1;
 }
+//192.168.1.9
+//255.255.255.0

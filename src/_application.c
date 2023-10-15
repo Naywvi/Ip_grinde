@@ -1,5 +1,6 @@
 #include <gtk/gtk.h>
 #include "../includes/code.h"
+
 //Struct to contain Ip / Mask entry
 typedef struct {
     GtkWidget *entryIp;
@@ -45,23 +46,28 @@ static void send_text(GtkWidget *widget, gpointer user_data) {
     EntryData *data = (EntryData *)user_data;
     const gchar *ip = gtk_entry_get_text(GTK_ENTRY(data->entryIp));
     const gchar *mask = gtk_entry_get_text(GTK_ENTRY(data->entryM));
-    
+    gchar *a = g_strdup(ip);
+    gchar *b = g_strdup(mask); // Copy the string to avoid overwriting it
+
     if (strlen(ip) == 0 || strlen(mask) == 0) {
-        show_warning_dialog("Please enter a valid ip address and mask");
+        //show_warning_dialog("Please enter a valid ip address and mask");
         return;
     }else{
-        // printf("ip : %s\n", ip);
-        // printf("mask : %s\n", mask);
-        run(ip, mask);
-        // Add to view with buffer
-        // GtkTextIter iter;
-        // gtk_text_buffer_get_end_iter(text_buffer, &iter); // End buffer
-        // gtk_text_buffer_insert(text_buffer, &iter, ip, -1); // Add at the end
-        // gtk_text_buffer_insert(text_buffer, &iter, "\n", -1); // Add new line
-        // gtk_text_buffer_insert(text_buffer, &iter, mask, -1); // Add at the end
+        //Reset inputs
+        if(run(ip, mask)){
+            // Add to view with buffer
+            GtkTextIter iter;
+            gtk_text_buffer_get_end_iter(text_buffer, &iter); // End buffer
+            gtk_text_buffer_insert(text_buffer, &iter, a, -1); // Add at the end
+            gtk_text_buffer_insert(text_buffer, &iter, "\n", -1); // Add new line
+            gtk_text_buffer_insert(text_buffer, &iter, b, -1); // Add at the end
+            gtk_text_buffer_insert(text_buffer, &iter, "\n", -1); // Add new line
+        }else{
+            show_warning_dialog("Please enter a valid ip address and mask");
+        }
+        gtk_entry_set_text(GTK_ENTRY(entryMa), ""); 
+        gtk_entry_set_text(GTK_ENTRY(data->entryIp), "");
     }
-
-  
 }
 
 static void activate(GtkApplication *app, gpointer user_data) {
@@ -95,7 +101,7 @@ static void activate(GtkApplication *app, gpointer user_data) {
     entryMa = gtk_entry_new();
     gtk_entry_set_placeholder_text(GTK_ENTRY(entryMa), "Example: 255.255.255.0");
     gtk_box_pack_start(GTK_BOX(main_box), entryMa, FALSE, FALSE, 0);
-    gtk_widget_set_sensitive(entryMa, FALSE); // Disabled if IP input is empty
+    gtk_widget_set_sensitive(entryM, FALSE); // Disabled if IP input is empty
 
     g_signal_connect(entryIp, "changed", G_CALLBACK(on_ip_entry_changed), entryMa);
 
@@ -118,8 +124,9 @@ static void activate(GtkApplication *app, gpointer user_data) {
 
     // Area view (GtkTextView)
     text_view = gtk_text_view_new();
+    gtk_widget_set_sensitive(text_view, FALSE);// Disable text view
     gtk_box_pack_start(GTK_BOX(main_box), text_view, TRUE, TRUE, 0); // Param TRUE, TRUE => Expand, Fill
-
+    
     // Buffer GtkTextView
     text_buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(text_view));
 

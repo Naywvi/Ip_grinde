@@ -16,7 +16,6 @@ int* decimalToBinary(int num) {
 
 // Convert each octet of the IP address to binary and store in an array 
 int** loopDecimal(int *ip) {
-    printf("loop dec");
     int** binaryIP = (int**)malloc(4 * sizeof(int*));
     if (binaryIP == NULL) {
         fprintf(stderr, "Erreur d'allocation de mémoire pour le tableau d'octets binaires.\n");
