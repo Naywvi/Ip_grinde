@@ -4,10 +4,11 @@ int* checkMask(gchar *mask){
     int* octetsM = (int*)malloc(4 * sizeof(int)); // Dynamic allocation of memory
     int i = 0;
     int a = 0;
+    int j = 0;
     char *tokenM;
     int pointCountM = 0;
 
-    for (int j = 0; mask[j]; j++)
+    for (j ; mask[j]; j++)
     {
         if (mask[j] == '.') pointCountM++;
     }

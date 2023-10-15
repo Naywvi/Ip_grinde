@@ -34,7 +34,6 @@ void show_warning_dialog(const gchar *message) {
         GTK_BUTTONS_OK,
         message
     );
-
     // Run the popup
     gint result = gtk_dialog_run(GTK_DIALOG(dialog));
 
@@ -43,20 +42,23 @@ void show_warning_dialog(const gchar *message) {
 
 // Send text to the GtkTextView
 static void send_text(GtkWidget *widget, gpointer user_data) {
+
     EntryData *data = (EntryData *)user_data;
     const gchar *ip = gtk_entry_get_text(GTK_ENTRY(data->entryIp));
     const gchar *mask = gtk_entry_get_text(GTK_ENTRY(data->entryM));
+
     gchar *a = g_strdup(ip);
     gchar *b = g_strdup(mask); // Copy the string to avoid overwriting it
 
     if (strlen(ip) == 0 || strlen(mask) == 0) {
-        //show_warning_dialog("Please enter a valid ip address and mask");
+        show_warning_dialog("Please enter a valid ip address and mask");
         return;
     }else{
         //Reset inputs
         if(run(ip, mask)){
             // Add to view with buffer
             GtkTextIter iter;
+
             gtk_text_buffer_get_end_iter(text_buffer, &iter); // End buffer
             gtk_text_buffer_insert(text_buffer, &iter, a, -1); // Add at the end
             gtk_text_buffer_insert(text_buffer, &iter, "\n", -1); // Add new line
@@ -101,6 +103,7 @@ static void activate(GtkApplication *app, gpointer user_data) {
     entryMa = gtk_entry_new();
     gtk_entry_set_placeholder_text(GTK_ENTRY(entryMa), "Example: 255.255.255.0");
     gtk_box_pack_start(GTK_BOX(main_box), entryMa, FALSE, FALSE, 0);
+    
     gtk_widget_set_sensitive(entryM, FALSE); // Disabled if IP input is empty
 
     g_signal_connect(entryIp, "changed", G_CALLBACK(on_ip_entry_changed), entryMa);

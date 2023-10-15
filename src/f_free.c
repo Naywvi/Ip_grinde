@@ -1,5 +1,5 @@
 //Free all arrays
-void freeArrays(int* ip, int* mask, int** ipBin, int** maskBin, char** hexIP) {
+void freeArrays() {
     free(ip);
     free(mask);
 

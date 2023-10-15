@@ -15,6 +15,7 @@ int* checkIp(gchar *ip){
     
     // Divide the string into tokens with delimiter as "."
     tokenIP = strtok(ip, ".");
+    
     while (tokenIP != NULL && i < 4)
     {
         octetsIP[i] = atoi(tokenIP); // Convert all the tokens to integers
@@ -24,3 +25,4 @@ int* checkIp(gchar *ip){
     }
     return octetsIP;
 }
+// Check a.a.a.a

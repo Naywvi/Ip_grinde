@@ -25,6 +25,9 @@ int** loopDecimal(int *ip) {
     for (int i = 0; i < 4; i++) {
         binaryIP[i] = decimalToBinary(ip[i]);
     }
-
+   
+    printf("IP binaire: ");
+    printBinary(binaryIP);
+    printf("\n");
     return binaryIP;
 }

@@ -10,16 +10,14 @@ int run(gchar *ipG, gchar *maskG)
     printf("IP: %s\n", ipG);
     printf("Mask: %s\n", maskG);
    
-    ip = checkIp(ipG);
-    mask = checkMask(maskG);
+    ip = checkIp(ipG); // MOMO
+    mask = checkMask(maskG); // RUBEN
     if(!ip||!mask)return 0; // Invalid IP or mask
 
-    ipBin = loopDecimal(ip);
-    maskBin = loopDecimal(mask);
-    hexIP = loopDecimalToHex(ip);
+    ipBin = loopDecimal(ip); // MOMO
+    maskBin = loopDecimal(mask); 
+    hexIP = loopDecimalToHex(ip); // RUBEN
 
-    freeArrays(ip, mask, ipBin, maskBin, hexIP); // Free memory
+    freeArrays(); // Free memory
     return 1;
 }
-//192.168.1.9
-//255.255.255.0
