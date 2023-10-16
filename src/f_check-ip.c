@@ -1,5 +1,6 @@
 //Check Ip protocole
-int* checkIp(gchar *ip){
+static int* ipstr;
+int* check_ip(gchar *ip){
     size_t lengthIp = strlen(ip);
     int* octetsIP = (int*)malloc(4 * sizeof(int)); // Dynamic allocation of memory
     int i = 0;
@@ -18,10 +19,14 @@ int* checkIp(gchar *ip){
     
     while (tokenIP != NULL && i < 4)
     {
-        octetsIP[i] = atoi(tokenIP); // Convert all the tokens to integers
-        if (octetsIP[i] < 0 || octetsIP[i] > 255)return 0; // Invalid octet value
-        tokenIP = strtok(NULL, ".");
-        i++;
+        if(atoi(tokenIP)){
+            octetsIP[i] = atoi(tokenIP); // Convert all the tokens to integers
+            if(i ==0 & octetsIP[i] == 0)return 0; // Invalid IP
+            if (octetsIP[i] < 0 || octetsIP[i] > 255)return 0; // Invalid octet value
+            tokenIP = strtok(NULL, ".");
+            i++;
+        }
+        else return 0; // Invalid IP
     }
     return octetsIP;
 }

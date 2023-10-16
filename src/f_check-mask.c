@@ -1,5 +1,5 @@
 // Check mask protocole
-int* checkMask(gchar *mask){
+int* check_mask(gchar *mask){
     size_t lengthMask = strlen(mask);
     int* octetsM = (int*)malloc(4 * sizeof(int)); // Dynamic allocation of memory
     int i = 0;

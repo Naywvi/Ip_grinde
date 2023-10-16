@@ -1,3 +1,0 @@
-a.a.a.
-exit()
-stock ip relancement

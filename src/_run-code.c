@@ -1,23 +1,19 @@
 // Global variables
 static int* ip;
 static int* mask;
-static int** ipBin;
-static int** maskBin;
-static char** hexIP;
 
-int run(gchar *ipG, gchar *maskG)
+// Loop code ip / mask / binary / hexadecimal / widget / user_data
+int run(gchar *ipG, gchar *maskG, gboolean binaryS, gboolean hexadecimalS)
 {
-    printf("IP: %s\n", ipG);
-    printf("Mask: %s\n", maskG);
-   
-    ip = checkIp(ipG); // MOMO
-    mask = checkMask(maskG); // RUBEN
+    // b & h == 1 nice
+    ip = check_ip(ipG); // MOMO
+    mask = check_mask(maskG); // RUBEN
     if(!ip||!mask)return 0; // Invalid IP or mask
 
-    ipBin = loopDecimal(ip); // MOMO
-    maskBin = loopDecimal(mask); 
-    hexIP = loopDecimalToHex(ip); // RUBEN
+    calculate_range(ip, mask, binaryS, hexadecimalS);
 
-    freeArrays(); // Free memory
+    printf("\n");
+
+    freeArrays(ip, mask); // Free memory
     return 1;
 }
