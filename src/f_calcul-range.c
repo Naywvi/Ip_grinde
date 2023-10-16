@@ -1,7 +1,9 @@
 
 #include <stdio.h>
 static int* ipInt;
+static GtkTextBuffer *text_buffer;
 
+//Convert(string) => int*
 int* convert_ip(const char* ipString) {
     int* octetsIP = (int*)malloc(4 * sizeof(int));
     int i = 0;
@@ -18,7 +20,6 @@ int* convert_ip(const char* ipString) {
     return octetsIP;
 }
 
-static GtkTextBuffer *text_buffer;
 //Generate range on buffer & check check box
 void generate_subnet(unsigned int ip, unsigned int mask, gboolean binaryS, gboolean hexadecimalS) {
     unsigned int subnetAddress = ip & mask;
@@ -38,10 +39,10 @@ void generate_subnet(unsigned int ip, unsigned int mask, gboolean binaryS, gbool
         gtk_text_buffer_insert(text_buffer, &iter, "\n", -1);
         
         if (binaryS) {
-            binaryIP = binary_convert_loop(ipInt); // Convertir en binaire
+            binaryIP = binary_convert_loop(ipInt); // Binary convert
             for (int j = 0; j < 4; j++) {
-                gtk_text_buffer_insert(text_buffer, &iter, binaryIP[j], -1); // Insérer la chaîne binaire
-                gtk_text_buffer_insert(text_buffer, &iter, " ", -1); // Ajouter un espace entre les octets binaires
+                gtk_text_buffer_insert(text_buffer, &iter, binaryIP[j], -1);
+                gtk_text_buffer_insert(text_buffer, &iter, " ", -1);
             }
             gtk_text_buffer_insert(text_buffer, &iter, "\n", -1);
             for (int j = 0; j < 4; j++) {
@@ -59,7 +60,6 @@ void generate_subnet(unsigned int ip, unsigned int mask, gboolean binaryS, gbool
         gtk_text_buffer_insert(text_buffer, &iter, "\n", -1);
     }
 }
-
 
 //Convert & calculate range main function
 void calculate_range(int *ip, int *mask, gboolean binaryS, gboolean hexadecimalS) {

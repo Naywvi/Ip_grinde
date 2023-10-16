@@ -15,18 +15,6 @@ static GtkTextBuffer *text_buffer; // Variable global for text buffer
 
 static GtkWidget *entryMa; // Variable global for mask entry
 
-static void on_ip_entry_changed(GtkWidget *entry, gpointer user_data) {
-    const gchar *ip = gtk_entry_get_text(GTK_ENTRY(entry));
-
-    // Si l'adresse IP est vide, désactivez l'entrée du masque
-    if (strlen(ip) == 0) {
-        gtk_widget_set_sensitive(entryMa, FALSE);
-        gtk_entry_set_text(GTK_ENTRY(entryMa), ""); // Effacez le contenu de l'entrée du masque
-    } else {
-        gtk_widget_set_sensitive(entryMa, TRUE); // Sinon, activez l'entrée du masque
-    }
-}
-
 // Warning dialog popup
 void show_warning_dialog(const gchar *message) {
     // Invisible window
@@ -43,6 +31,41 @@ void show_warning_dialog(const gchar *message) {
     gint result = gtk_dialog_run(GTK_DIALOG(dialog));
 
     gtk_widget_destroy(dialog); // Destroy when the user clicks on the button
+}
+
+// Load data from the file & print the list in the GtkTextView
+void print_list(){
+    const char *filename = "./list.json";
+    char **ipArray = NULL;
+    char **maskArray = NULL;
+    int count = 0;
+
+    load_data(filename, &ipArray, &maskArray, &count);
+
+    if (count > 0) {
+        GtkTextIter iter;
+        for (int i = 0; i < count; i++) {
+            gtk_text_buffer_get_end_iter(text_buffer, &iter);
+            gtk_text_buffer_insert(text_buffer, &iter, ipArray[i], -1);
+            gtk_text_buffer_insert(text_buffer, &iter, "\n", -1);
+            gtk_text_buffer_insert(text_buffer, &iter, maskArray[i], -1);
+            gtk_text_buffer_insert(text_buffer, &iter, "\n\n", -1);
+        }
+    } else show_warning_dialog("No data found in the file.");
+    
+    free_data(ipArray, maskArray, count);
+}
+
+static void on_ip_entry_changed(GtkWidget *entry, gpointer user_data) {
+    const gchar *ip = gtk_entry_get_text(GTK_ENTRY(entry));
+
+    // If the IP entry is empty, disable the mask entry
+    if (strlen(ip) == 0) {
+        gtk_widget_set_sensitive(entryMa, FALSE);
+        gtk_entry_set_text(GTK_ENTRY(entryMa), ""); // Delete the text in the mask entry
+    } else {
+        gtk_widget_set_sensitive(entryMa, TRUE); // Or enable it
+    }
 }
 
 // Send text to the GtkTextView
@@ -63,7 +86,10 @@ static void send_text(GtkWidget *widget, gpointer user_data) {
 
         if(!run(ip, mask, binaryS, hexadecimalS))
             show_warning_dialog("Please enter a valid ip address and mask");
-        
+        else {
+            save_L(a,b); // save
+            show_warning_dialog("Add to the list");
+        }
         gtk_entry_set_text(GTK_ENTRY(entryMa), ""); 
         gtk_entry_set_text(GTK_ENTRY(data->entryIp), "");
     }
@@ -92,7 +118,8 @@ static void on_hexadecimal_toggled(GtkToggleButton *button, gpointer user_data) 
     EntryData *data = (EntryData *)user_data;
     data->hexadecimalCheck = gtk_toggle_button_get_active(button);
 }
-// Main function
+
+// Main gtk function
 static void activate(GtkApplication *app, gpointer user_data) {
     GtkWidget *window;
     GtkWidget *button_box;
@@ -104,6 +131,7 @@ static void activate(GtkApplication *app, gpointer user_data) {
     GtkWidget *binary;
     GtkWidget *hexadecimal;
     GtkWidget *save_button;
+    GtkWidget *save_button_list;
 
     // Window configuration
     window = gtk_application_window_new(app);
@@ -158,6 +186,11 @@ static void activate(GtkApplication *app, gpointer user_data) {
     save_button = gtk_button_new_with_label("Save");
     g_signal_connect(save_button, "clicked", G_CALLBACK(save_B), data);
     gtk_box_pack_start(GTK_BOX(main_box), save_button, FALSE, FALSE, 0);
+
+    //annuaire
+    save_button_list = gtk_button_new_with_label("Check list");
+    g_signal_connect(save_button_list, "clicked", G_CALLBACK(print_list), data);
+    gtk_box_pack_start(GTK_BOX(main_box), save_button_list, FALSE, FALSE, 0);
 
     // Area view (GtkTextView)
     text_view = gtk_text_view_new();
