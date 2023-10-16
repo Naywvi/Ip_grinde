@@ -1,0 +1,28 @@
+{
+    "configurations": [
+        {
+            "name": "Mac",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/usr/local/Cellar/gtk+3/3.24.38/include/gtk-3.0",
+                "/usr/local/include/gio-unix-2.0",
+                "/usr/local/lib",
+                "/usr/local/include/glib-2.0",
+                "/usr/local/Cellar/glib/2.78.0/lib/glib-2.0/include",
+                "/usr/local/Cellar/pango/1.50.14/include/pango-1.0",
+                "/usr/local/Cellar/harfbuzz/8.2.1/include/harfbuzz",
+                "/usr/local/Cellar/cairo/1.16.0_5/include/cairo",
+                "/usr/local/Cellar/gdk-pixbuf/2.42.10_1/include/gdk-pixbuf-2.0",
+                "/usr/local/Cellar/atk/2.38.0/include/atk-1.0"
+            ],
+            "defines": [],
+            "macFrameworkPath": [
+                "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks"
+            ],
+            "cStandard": "c17",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "macos-clang-x64"
+        }
+    ],
+    "version": 4
+}

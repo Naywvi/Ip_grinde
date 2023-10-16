@@ -1,0 +1,23 @@
+{
+    "files.associations": {
+        "gtk.h": "c",
+        "jansson.h": "c",
+        "code.h": "c",
+        "__locale": "c",
+        "random": "c",
+        "__hash_table": "c",
+        "__split_buffer": "c",
+        "array": "c",
+        "bitset": "c",
+        "deque": "c",
+        "initializer_list": "c",
+        "queue": "c",
+        "span": "c",
+        "string": "c",
+        "string_view": "c",
+        "unordered_map": "c",
+        "vector": "c",
+        "format": "c",
+        "cstdlib": "c"
+    }
+}
