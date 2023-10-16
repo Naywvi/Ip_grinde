@@ -31,9 +31,11 @@ void generate_subnet(unsigned int ip, unsigned int mask, gboolean binaryS, gbool
     GtkTextIter iter;
     for (unsigned int i = subnetAddress + 1; i < broadcastAddress; i++) {
         snprintf(ipString, sizeof(ipString), "%u.%u.%u.%u", (i >> 24) & 0xFF, (i >> 16) & 0xFF, (i >> 8) & 0xFF, i & 0xFF);
-        char ok[16];
-        strcpy(ok, g_strdup(ipString));
-        ipInt = convert_ip(ok);
+        char temp[16];
+        strcpy(temp, g_strdup(ipString));
+
+        ipInt = convert_ip(temp); // Convert string -> int[]
+
         gtk_text_buffer_get_end_iter(text_buffer, &iter);
         gtk_text_buffer_insert(text_buffer, &iter, ipString, -1);
         gtk_text_buffer_insert(text_buffer, &iter, "\n", -1);
@@ -51,7 +53,7 @@ void generate_subnet(unsigned int ip, unsigned int mask, gboolean binaryS, gbool
             free(binaryIP);
         }
         
-        if (hexadecimalS) {// Convert hexa
+        if (hexadecimalS) { // Convert hexa
             hexString = hexdecimal_convert(ipInt);
             gtk_text_buffer_insert(text_buffer, &iter, hexString, -1);
             gtk_text_buffer_insert(text_buffer, &iter, "\n", -1);

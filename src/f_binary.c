@@ -8,7 +8,7 @@ char* binary_convert(int num) {
     }
 
     for (int i = 0; i < 8; i++) {
-        binaryArray[i] = ((num >> (7 - i)) & 1) ? '1' : '0';
+        binaryArray[i] = ((num >> (7 - i)) & 1) ? '1' : '0';// Fonction ternaire
     }
     binaryArray[8] = '\0';  // Null-terminate the string
 
@@ -19,7 +19,7 @@ char* binary_convert(int num) {
 char** binary_convert_loop(int *ip) {
     char** binaryIP = (char**)malloc(4 * sizeof(char*));
 
-    if (binaryIP == NULL) {
+    if (binaryIP == NULL) { // Ram 100% => exit
         fprintf(stderr, "Erreur d'allocation de mémoire pour le tableau d'octets binaires.\n");
         exit(1);
     }

@@ -56,6 +56,7 @@ void print_list(){
     free_data(ipArray, maskArray, count);
 }
 
+//Empty input2
 static void on_ip_entry_changed(GtkWidget *entry, gpointer user_data) {
     const gchar *ip = gtk_entry_get_text(GTK_ENTRY(entry));
 
@@ -83,7 +84,6 @@ static void send_text(GtkWidget *widget, gpointer user_data) {
         show_warning_dialog("Please enter a valid ip address and mask");
         return;
     }else{
-
         if(!run(ip, mask, binaryS, hexadecimalS))
             show_warning_dialog("Please enter a valid ip address and mask");
         else {
@@ -131,7 +131,7 @@ static void activate(GtkApplication *app, gpointer user_data) {
     GtkWidget *binary;
     GtkWidget *hexadecimal;
     GtkWidget *save_button;
-    GtkWidget *save_button_list;
+    GtkWidget *check_button_list;
 
     // Window configuration
     window = gtk_application_window_new(app);
@@ -188,9 +188,9 @@ static void activate(GtkApplication *app, gpointer user_data) {
     gtk_box_pack_start(GTK_BOX(main_box), save_button, FALSE, FALSE, 0);
 
     //annuaire
-    save_button_list = gtk_button_new_with_label("Check list");
-    g_signal_connect(save_button_list, "clicked", G_CALLBACK(print_list), data);
-    gtk_box_pack_start(GTK_BOX(main_box), save_button_list, FALSE, FALSE, 0);
+    check_button_list = gtk_button_new_with_label("Check list");
+    g_signal_connect(check_button_list, "clicked", G_CALLBACK(print_list), data);
+    gtk_box_pack_start(GTK_BOX(main_box), check_button_list, FALSE, FALSE, 0);
 
     // Area view (GtkTextView)
     text_view = gtk_text_view_new();

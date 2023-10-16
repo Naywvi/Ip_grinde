@@ -20,17 +20,18 @@ int* check_mask(gchar *mask){
 
     while (tokenM != NULL && a < 4)
     {
-        octetsM[a] = atoi(tokenM); // Convertir le token en entier
-        if (octetsM[a] < 0 || octetsM[a] > 255)return 0; // Invalid octet value
-        tokenM = strtok(NULL, ".");
-        a++;
+        if(atoi(tokenM)){
+            octetsM[a] = atoi(tokenM); // Convertir le token en entier
+            if (octetsM[a] < 0 || octetsM[a] > 255)return 0; // Invalid octet value
+            tokenM = strtok(NULL, ".");
+            a++;
+        }
+        else return 0; // Invalid IP
     }
-
-    if (a != 4)return 0; // Bad mask format
 
     a = 0; // Reset a to 0
     while (tokenM != NULL && a < 4)
-    {
+    {// out of range index 1 & last
         if (a > 0 && octetsM[a] < octetsM[a - 1] && octetsM[a] != octetsM[3])
         {
             if (octetsM[a] == 0)
@@ -45,5 +46,10 @@ int* check_mask(gchar *mask){
         }
         a++;
     }
+    
     return octetsM;
 }
+//exemple:
+
+//255.255.0.255
+//255.255.0.0

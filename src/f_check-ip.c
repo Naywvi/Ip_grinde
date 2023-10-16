@@ -30,4 +30,3 @@ int* check_ip(gchar *ip){
     }
     return octetsIP;
 }
-// Check a.a.a.a
